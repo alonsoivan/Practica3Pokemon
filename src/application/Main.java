@@ -4,14 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -26,13 +25,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-
+import javafx.stage.Stage;
 
 public class Main extends Application {
 	static String[] nombres = new String[] {"Charmander","Diglett","Pikachu","Psyduck","Squirtle","Vulpix"};
-	static Pokemon pkAux;
+	static Pokemon pkm;
+		
 	@Override
 	public void start(Stage primaryStage) throws FileNotFoundException {
 		ArrayList<Pokemon> listaPokemons = new ArrayList<Pokemon>();
@@ -63,7 +61,6 @@ public class Main extends Application {
 	public void initPokemons(GridPane pane,ArrayList<Pokemon> listaPokemons) {
 		ArrayList<PokemonBorderPane> paneles = new ArrayList<PokemonBorderPane>();
 		
-		
 		int maxColumns = 3;
 		int maxRows = listaPokemons.size()/3;
 		
@@ -92,29 +89,15 @@ public class Main extends Application {
 					@Override
 					public void handle(MouseEvent event) {
 						
-				
-						FlowPane fp = (FlowPane)event.getSource();
-					
-						Label lbNombre = (Label)fp.getChildren().get(0);
-						fp.getChildren().get(0) = new TextField("hpña");
-						System.out.println("Nombre "+lbNombre.getText());
+						if(event.getClickCount() == 2) {
+							FlowPane fp = (FlowPane)event.getSource();
 						
-						boolean repe = true;
-						while(repe) {
-							System.out.println("Nuevo nombre: ");
-							Scanner tc = new Scanner(System.in,"UTF-8");
-							String nombre = tc.nextLine();
+							Label lbNombre = (Label)fp.getChildren().get(0);
 							
-						    if(getNombres(listaPokemons).contains(nombre)) {
-						    	System.out.println("Ya existe");
-						    	repe = true;
-						    }else {
-								pkAux.setNombre(nombre);
-								lbNombre.setText(" "+pkAux.getNombre());
-								repe = false;
-						    }
+							cambiarNombrePokemons(listaPokemons,paneles);
+								
+							System.out.println("Nombre "+lbNombre.getText());
 						}
-						
 					}
 		        };
 		        fpNombreNivel.setOnMouseClicked(onClickListenerNombre);
@@ -133,12 +116,12 @@ public class Main extends Application {
 						
 						PokemonBorderPane pokemonBorderPane = (PokemonBorderPane)event.getSource();
 						cambiarEstilo(paneles);
-						pkAux = pokemonBorderPane.getPokemon();
+						pkm = pokemonBorderPane.getPokemon();
 						pokemonBorderPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #b9b901, #dfdf00);");
-						System.out.println("Soy el Pokemon " + pokemonBorderPane.getPokemon().getNombre());
+						
+						//System.out.println("Soy el Pokemon " + pokemonBorderPane.getPokemon().getNombre());
 					}
 		        };
-		        
 		        
 		        // Añadimos el listener
 		        borderPane.setOnMouseClicked(onClickListenerPane);
@@ -158,6 +141,22 @@ public class Main extends Application {
 				
 				cont++;
 			}
+		}
+	}
+	
+	public void cambiarNombrePokemons(ArrayList<Pokemon> listaPokemons,ArrayList<PokemonBorderPane> paneles){
+		for (Pokemon pk : listaPokemons)
+			pk.setNivel(pk.getNivel()+1);
+		
+		cambiarLabels(paneles);
+	}
+	
+	public void cambiarLabels(ArrayList<PokemonBorderPane> paneles) {
+		for (PokemonBorderPane panel : paneles) {
+			FlowPane fp = (FlowPane)panel.getChildren().get(1);
+			Label lb = (Label) fp.getChildren().get(1);
+	
+			lb.setText(" Nv " +String.valueOf(panel.getPokemon().getNivel()));
 		}
 	}
 	
@@ -202,5 +201,4 @@ public class Main extends Application {
 	public static int getVida() {
 		return new Random().nextInt(100)+1;
 	}
-	
 }
