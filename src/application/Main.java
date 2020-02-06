@@ -12,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -51,7 +53,7 @@ public class Main extends Application {
 		ElegirPokemonController elegirPokemonController = (ElegirPokemonController)loader.getController();			
 		
 		initPokemons(elegirPokemonController.gridPanePokemons, listaPokemons);
-		Scene scene = new Scene(root,750,700);
+		Scene scene = new Scene(root,750,750);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
@@ -61,8 +63,8 @@ public class Main extends Application {
 	public void initPokemons(GridPane pane,ArrayList<Pokemon> listaPokemons) {
 		ArrayList<PokemonBorderPane> paneles = new ArrayList<PokemonBorderPane>();
 		
-		int maxColumns = 3;
-		int maxRows = listaPokemons.size()/3;
+		int maxColumns = listaPokemons.size()/3;
+		int maxRows = 3;
 		
 		int currentColumn = 0;
 		int currentRow = 0;
@@ -95,8 +97,8 @@ public class Main extends Application {
 							Label lbNombre = (Label)fp.getChildren().get(0);
 							
 							cambiarNombrePokemons(listaPokemons,paneles);
-								
-							System.out.println("Nombre "+lbNombre.getText());
+							
+							mostrarAlertaNivel();
 						}
 					}
 		        };
@@ -137,11 +139,20 @@ public class Main extends Application {
 				borderPane.setBottom(fp);
 				//borderPane.autosize();
 				borderPane.setPrefSize(215, 200);
-				pane.add(borderPane, currentColumn, currentRow);
+				pane.add(borderPane,  currentRow, currentColumn);
 				
 				cont++;
 			}
 		}
+	}
+	
+	public void mostrarAlertaNivel() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("SUBIDA DE NIVEL");
+		alert.setHeaderText(null);
+		alert.setContentText("¡NIVELES++!");
+
+		alert.showAndWait();
 	}
 	
 	public void cambiarNombrePokemons(ArrayList<Pokemon> listaPokemons,ArrayList<PokemonBorderPane> paneles){
@@ -173,7 +184,6 @@ public class Main extends Application {
 		return nombres;
 	}
 	
-	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -183,7 +193,7 @@ public class Main extends Application {
 		
 		try {
 			for (int i = 0; i<numPokemons ;i++)
-				aux.add(new Pokemon(nombres[i%5]+i,getNivel(),getVida(),getImagen(i),i));
+				aux.add(new Pokemon(nombres[i%6]+(i+1),getNivel(),getVida(),getImagen(i),i));
 			
 		} catch (FileNotFoundException e) {e.printStackTrace();}
 			
@@ -191,7 +201,7 @@ public class Main extends Application {
 	}
 	
 	public static Image getImagen(int i) throws FileNotFoundException {
-		return new Image(new FileInputStream("imagenes\\"+nombres[i%5]+".png"));
+		return new Image(new FileInputStream("imagenes\\"+nombres[i%6]+".png"));
 	}
 	
 	public static int getNivel() {

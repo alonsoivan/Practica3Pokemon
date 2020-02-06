@@ -9,7 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -32,7 +34,7 @@ public class ElegirPokemonController implements Initializable{
 	@FXML
 	public void abrirCombate(ActionEvent event) {
 		if(Main.pkm == null)
-			System.out.println("Elige un pkm");
+			mostrarAlertaPokemon();
 		else{
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("CombatePokemon.fxml"));
@@ -45,5 +47,14 @@ public class ElegirPokemonController implements Initializable{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void mostrarAlertaPokemon() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("ERROR");
+		alert.setHeaderText(null);
+		alert.setContentText("¡DEBES SELECCIONAR UN POKEMON!");
+
+		alert.showAndWait();
 	}
 }
