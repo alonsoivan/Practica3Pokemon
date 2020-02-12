@@ -40,7 +40,7 @@ public class ElegirPokemonController implements Initializable{
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("CombatePokemon.fxml"));
 				AnchorPane ap = (AnchorPane)loader.load();        	
 				secondStage = new Stage();
-				secondStage.setScene(new Scene(ap, 450, 450));
+				secondStage.setScene(new Scene(ap, 500, 500));
 				secondStage.show();
 				
 			} catch (IOException e) {

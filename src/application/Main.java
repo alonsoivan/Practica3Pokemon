@@ -84,9 +84,9 @@ public class Main extends Application {
 				Label lbNombre = new Label(" "+listaPokemons.get(cont).getNombre());
 				Label lbNivel = new Label(" Nv " +  listaPokemons.get(cont).getNivel());
 				lbNombre.setFont(new Font("Agency FB", 25));
-				lbNombre.setTextFill(Color.web("#0076a3"));
+				lbNombre.setTextFill(Color.web("#000000"));
 				lbNivel.setFont(new Font("Agency FB", 25));
-				lbNivel.setTextFill(Color.web("#0076a3"));
+				lbNivel.setTextFill(Color.web("#000000"));
 				EventHandler<MouseEvent> onClickListenerNombre = new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent event) {
@@ -131,7 +131,7 @@ public class Main extends Application {
 				FlowPane fp = new FlowPane();
 				Label lbPs = new Label(" PS: ");
 				lbPs.setFont(new Font("Agency FB", 25));
-				lbPs.setTextFill(Color.web("#0076a3"));
+				lbPs.setTextFill(Color.web("#000000"));
 				fp.getChildren().add(lbPs);
 				fp.getChildren().add(pb);
 				

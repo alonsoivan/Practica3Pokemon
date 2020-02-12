@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 public class Pokemon {
 	private String nombre;
 	private int nivel;
-	private int vida;
+	private float vida;
 	private Image imagen;
 	
 	private String seguro;
@@ -39,11 +39,12 @@ public class Pokemon {
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
 	}
-	public int getVida() {
+	
+	public float getVida() {
 		return vida;
 	}
-	public void setVida(int vida) {
-		this.vida = vida;
+	public void setVida(float f) {
+		this.vida = f;
 	}
 	public Image getImagen() {
 		return imagen;
