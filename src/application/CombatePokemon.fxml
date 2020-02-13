@@ -19,20 +19,12 @@
         <Image url="@../../imagenes/fondo.png" />
       </image>
     </ImageView>
-    <Rectangle arcHeight="50.0" arcWidth="50.0" height="84.0" layoutX="14.0" layoutY="14.0" opacity="0.75" stroke="$x5" strokeType="INSIDE" strokeWidth="1.3" width="230.0">
+    <Rectangle arcHeight="50.0" arcWidth="50.0" height="84.0" layoutX="251.0" layoutY="238.0" opacity="0.7" stroke="$x5" strokeType="INSIDE" strokeWidth="1.3" width="235.00006103515625">
       <fill>
         <LinearGradient fx:value="linear-gradient(from 25.0% 25.0% to 100.0% 100.0%, 0xff0000ff 0.0%, 0xff0000ff 50.0%, 0x000000ff 50.0%, 0x000000ff 100.0%)" fx:id="x5" />
       </fill>
     </Rectangle>
-    <Rectangle arcHeight="50.0" arcWidth="50.0" fill="$x5" height="84.0" layoutX="251.0" layoutY="238.0" opacity="0.7" stroke="$x5" strokeType="INSIDE" strokeWidth="1.3" width="235.00006103515625" />
-    <Label layoutX="25.0" layoutY="19.0" prefHeight="40.0" prefWidth="206.9998779296875" text="SNORLAX">
-      <font>
-        <Font name="System Bold" size="30.0" fx:id="x4" />
-      </font>
-    </Label>
-    <Label fx:id="nombreCombate" font="$x4" layoutX="262.0" layoutY="238.0" prefHeight="40.0" prefWidth="214.0" text="" />
     <ProgressBar fx:id="psAliado" layoutX="325.0" layoutY="290.0" onMouseEntered="#mostrarVida" onMouseExited="#mostrarPS" prefWidth="154.0" progress="1.0" />
-    <ProgressBar fx:id="psEnemigo" layoutX="68.0" layoutY="64.0" onMouseEntered="#mostrarVida" onMouseExited="#mostrarPS" prefWidth="154.0" progress="1.0" />
     <ImageView fitHeight="235.0" fitWidth="235.0" layoutX="251.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@../../imagenes/snorlax.png" />
@@ -43,30 +35,26 @@
         <Image url="@../../imagenes/entrenador.png" />
       </image>
     </ImageView>
-    <Label fx:id="psLabelEnemigo" alignment="CENTER" layoutX="8.0" layoutY="59.0" minHeight="33.0" prefHeight="33.0" prefWidth="60.0" text="PS:" textAlignment="CENTER">
+    <Label fx:id="nombreCombate" layoutX="262.0" layoutY="238.0" prefHeight="40.0" prefWidth="214.0" text="" textFill="BLACK">
+      <font>
+        <Font name="System Bold" size="30.0" fx:id="x4" />
+      </font>
+    </Label>
+    <Label fx:id="psLabelAliado" alignment="CENTER" layoutX="265.0" layoutY="283.0" minHeight="33.0" prefHeight="34.0" prefWidth="60.0" text="PS:" textAlignment="CENTER" textFill="BLACK">
       <font>
         <Font size="15.0" fx:id="x2" />
       </font>
     </Label>
-    <Label fx:id="psLabelAliado" alignment="CENTER" font="$x2" layoutX="265.0" layoutY="283.0" minHeight="33.0" prefHeight="34.0" prefWidth="60.0" text="PS:" textAlignment="CENTER" />
     <Rectangle arcHeight="50.0" arcWidth="50.0" fill="$x5" height="144.0" layoutX="15.0" layoutY="342.0" opacity="0.7" stroke="$x5" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #dc143c, #661a33)" visible="true" width="471.0" />
-    <GridPane id="panel" fx:id="panelCursarseOAtacar" alignment="CENTER" layoutX="25.0" layoutY="341.0" opacity="1.0" prefHeight="145.0" prefWidth="451.0" visible="false">
+    <Pane id="mensaje" fx:id="panelMensaje" layoutX="38.0" layoutY="353.0" onMouseClicked="#clickMensaje" prefHeight="116.0" prefWidth="420.9998779296875" visible="true">
       <children>
-        <Button fx:id="btCurarse" mnemonicParsing="false" onAction="#curarse" prefHeight="-1.0" prefWidth="200.0" text="CURARSE" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+        <Label layoutX="10.0" layoutY="38.0" prefHeight="39.90234375" prefWidth="411.0" text="¡Pokemon salvaje apareció!" textFill="WHITE" visible="true">
           <font>
-            <Font name="Calibri Bold" size="35.0" fx:id="x1" />
+            <Font name="System Bold Italic" size="30.0" />
           </font>
-        </Button>
-        <Button fx:id="btAtacar" font="$x1" mnemonicParsing="false" onAction="#atacar" prefHeight="-1.0" prefWidth="200.0" text="ATACAR" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+        </Label>
       </children>
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-    </GridPane>
+    </Pane>
     <GridPane fx:id="panelAtaques" alignment="TOP_CENTER" hgap="10.0" layoutX="-14.0" layoutY="356.0" prefHeight="143.99990000000253" prefWidth="529.0" vgap="15.0" visible="false">
       <children>
         <Button fx:id="btAtaqueSeguro" alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#ataques" prefHeight="45.0" prefWidth="230.0" text="Ataque seguro" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
@@ -90,14 +78,26 @@
         <RowConstraints maxHeight="44.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-    <Pane id="mensaje" fx:id="panelMensaje" layoutX="38.0" layoutY="353.0" onMouseClicked="#clickMensaje" prefHeight="116.0" prefWidth="420.9998779296875" visible="true">
+    <GridPane id="panel" fx:id="panelCursarseOAtacar" alignment="CENTER" layoutX="25.0" layoutY="341.0" opacity="1.0" prefHeight="145.0" prefWidth="451.0" visible="false">
       <children>
-        <Label layoutX="10.0" layoutY="38.0" prefHeight="39.90234375" prefWidth="411.0" text="¡Pokemon salvaje apareció!" textFill="WHITE" visible="true">
+        <Button fx:id="btCurarse" mnemonicParsing="false" onAction="#curarse" prefHeight="-1.0" prefWidth="200.0" text="CURARSE" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
           <font>
-            <Font name="System Bold Italic" size="30.0" />
+            <Font name="Calibri Bold" size="35.0" fx:id="x1" />
           </font>
-        </Label>
+        </Button>
+        <Button fx:id="btAtacar" font="$x1" mnemonicParsing="false" onAction="#atacar" prefHeight="-1.0" prefWidth="200.0" text="ATACAR" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
       </children>
-    </Pane>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <Rectangle arcHeight="50.0" arcWidth="50.0" fill="$x5" height="84.0" layoutX="14.0" layoutY="14.0" opacity="0.75" stroke="$x5" strokeType="INSIDE" strokeWidth="1.3" width="230.0" />
+    <Label fx:id="psLabelEnemigo" alignment="CENTER" font="$x2" layoutX="8.0" layoutY="59.0" minHeight="33.0" prefHeight="33.0" prefWidth="60.0" text="PS:" textAlignment="CENTER" textFill="BLACK" />
+    <Label font="$x4" layoutX="25.0" layoutY="19.0" prefHeight="40.0" prefWidth="206.9998779296875" text="SNORLAX" textFill="BLACK" />
+    <ProgressBar fx:id="psEnemigo" layoutX="68.0" layoutY="64.0" onMouseEntered="#mostrarVida" onMouseExited="#mostrarPS" prefWidth="154.0" progress="1.0" />
   </children>
 </AnchorPane>

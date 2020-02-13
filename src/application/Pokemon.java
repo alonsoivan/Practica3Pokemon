@@ -12,6 +12,8 @@ public class Pokemon {
 	private String medio;
 	private String arriesgado;
 	
+	public Pokemon() {}
+	
 	public Pokemon(String nombre, int nivel, int vida, Image imagen, int ataques) {
 		super();
 		this.nombre = nombre;
@@ -23,9 +25,24 @@ public class Pokemon {
 		this.arriesgado = "Arriesgado"+ataques;
 	}
 	
-	public Pokemon() {
-		// TODO Auto-generated constructor stub
+	public void recibirDano(int dano) {
+		this.vida = this.vida - dano;
+		if (this.vida < 0) {
+			this.vida = 0;
+		}
 	}
+	
+	public void curar(int curacion) {
+		this.vida = this.vida + curacion;
+		if (this.vida > 100) {
+			this.vida = 100;
+		}
+	}
+
+	public boolean estaMuerto() {
+		return this.vida == 0;
+	}
+	
 
 	public String getNombre() {
 		return nombre;

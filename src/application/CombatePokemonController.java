@@ -1,16 +1,22 @@
 package application;
 
+import java.util.Optional;
 import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 
 public class CombatePokemonController {
@@ -53,12 +59,12 @@ public class CombatePokemonController {
 			
 			float ale = (new Random().nextInt(51)+25);
 			
-			float vida = (float) (Main.pkm.getVida()+ale);
+			float vida = (float) (ElegirPokemonController.pkm.getVida()+ale);
 			
 			if (vida>100)
 				vida = 100;
 			
-			Main.pkm.setVida(vida);
+			ElegirPokemonController.pkm.setVida(vida);
 			psAliado.setProgress(vida/100f);
 			
 			enemigoAtaca();  
@@ -91,21 +97,25 @@ public class CombatePokemonController {
 			enemigoAtaca();
 	}
 	
-	
-	
 	public void enemigoAtaca() {
-		Main.pkm.setVida((Main.pkm.getVida()-20));
+		ElegirPokemonController.pkm.setVida((ElegirPokemonController.pkm.getVida()-20));
 		
-		psAliado.setProgress(Main.pkm.getVida()/100f);
+		psAliado.setProgress(ElegirPokemonController.pkm.getVida()/100f);
 		if (psAliado.getProgress()<=0) {
 			psAliado.setProgress(0);
-			Main.pkm.setVida(0);
+			ElegirPokemonController.pkm.setVida(0);
+			mostrarAlerta("Tu pokemon se debilitó","penita pena",ivCombate);
 		}
 	}
 	
 	@FXML  
 	public void atacar(ActionEvent event) {		
 		if(((Node) event.getSource()).getId().equals("btAtacar")) {
+			
+			btAtaqueSeguro.setText(ElegirPokemonController.pkm.getSeguro());
+			btAtaqueArriesgado.setText(ElegirPokemonController.pkm.getMedio());
+			btAtaqueMuyArriesgado.setText(ElegirPokemonController.pkm.getArriesgado());
+			
 			panelAtaques.setVisible(true);
 			panelCursarseOAtacar.setVisible(false);
 		}
@@ -130,12 +140,34 @@ public class CombatePokemonController {
 	
 	@FXML
 	public void clickMensaje(MouseEvent event) {		
-		ivCombate.setImage(Main.pkm.getImagen());
-		nombreCombate.setText(Main.pkm.getNombre());
-		psAliado.setProgress(Main.pkm.getVida()/100f);
+		ivCombate.setImage(ElegirPokemonController.pkm.getImagen());
+		nombreCombate.setText(ElegirPokemonController.pkm.getNombre());
+		psAliado.setProgress(ElegirPokemonController.pkm.getVida()/100f);
 		
 		panelMensaje.setVisible(false);
 		panelCursarseOAtacar.setVisible(true);
+	}
+	
+	private void mostrarAlerta(String titulo, String content, ImageView imagenPokemon) {
+		ButtonType volver = new ButtonType("Volver al menu", ButtonData.OK_DONE);
+		ButtonType salir = new ButtonType("Salir", ButtonData.CANCEL_CLOSE);
+		Alert alerta = new Alert(AlertType.NONE, content, salir, volver);
+		
+		
+		alerta.setGraphic(imagenPokemon);
+
+		alerta.setTitle(titulo);
+		
+		Optional<ButtonType> resultado = alerta.showAndWait();
+		if(!resultado.isPresent()) {
+			Stage stage = (Stage) btCancelar.getScene().getWindow();
+			stage.close();
+		} else if(resultado.get() == volver) {
+			Stage stage = (Stage) btCancelar.getScene().getWindow();
+			stage.close();
+		} else if (resultado.get() == salir) {
+			System.exit(0);
+		}
 	}
 
 }
