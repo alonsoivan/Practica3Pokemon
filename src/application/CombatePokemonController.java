@@ -90,6 +90,7 @@ public class CombatePokemonController {
 		
 		if(vida<=0.001) {
 			psEnemigo.setProgress(0);
+			mostrarAlerta("El pokemon enemigo se debilitó","Ganaste el combate.",ivCombate);
 		}else
 			psEnemigo.setProgress(vida);
 		
@@ -120,7 +121,6 @@ public class CombatePokemonController {
 			panelCursarseOAtacar.setVisible(false);
 		}
 	}
-	
 	
 	@FXML
 	public void mostrarVida(MouseEvent event) {
@@ -153,7 +153,6 @@ public class CombatePokemonController {
 		ButtonType salir = new ButtonType("Salir", ButtonData.CANCEL_CLOSE);
 		Alert alerta = new Alert(AlertType.NONE, content, salir, volver);
 		
-		
 		alerta.setGraphic(imagenPokemon);
 
 		alerta.setTitle(titulo);
@@ -162,9 +161,11 @@ public class CombatePokemonController {
 		if(!resultado.isPresent()) {
 			Stage stage = (Stage) btCancelar.getScene().getWindow();
 			stage.close();
+			ElegirPokemonController.actualizarProgressBar(); 
 		} else if(resultado.get() == volver) {
 			Stage stage = (Stage) btCancelar.getScene().getWindow();
 			stage.close();
+			ElegirPokemonController.actualizarProgressBar(); 
 		} else if (resultado.get() == salir) {
 			System.exit(0);
 		}

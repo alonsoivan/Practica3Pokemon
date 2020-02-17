@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 public class ElegirPokemonController implements Initializable{
 	static String[] nombres = new String[] {"Charmander","Diglett","Pikachu","Psyduck","Squirtle","Vulpix"};
 	static Pokemon pkm;
+	static ArrayList<PokemonBorderPane> paneles = new ArrayList<PokemonBorderPane>();
 
 	private Stage secondStage;
 	
@@ -52,7 +53,6 @@ public class ElegirPokemonController implements Initializable{
 	}
 	
 	public void initPokemons(GridPane pane,ArrayList<Pokemon> listaPokemons) {
-		ArrayList<PokemonBorderPane> paneles = new ArrayList<PokemonBorderPane>();
 		
 		int maxColumns = listaPokemons.size()/3;
 		int maxRows = 3;
@@ -72,12 +72,15 @@ public class ElegirPokemonController implements Initializable{
 				img.setFitWidth(247);
 				borderPane.setCenter(img);
 				FlowPane fpNombreNivel = new FlowPane();
-				Label lbNombre = new Label(" "+listaPokemons.get(cont).getNombre());
-				Label lbNivel = new Label(" Nv " +  listaPokemons.get(cont).getNivel());
+				String nombre =  String.format(" %-12s",listaPokemons.get(cont).getNombre());
+				Label lbNombre = new Label(nombre);
+				String nivel =  String.format("%5s"," Nv "+listaPokemons.get(cont).getNivel());
+				Label lbNivel = new Label(nivel);
 				lbNombre.setFont(new Font("Agency FB", 25));
 				lbNombre.setTextFill(Color.web("#000000"));
 				lbNivel.setFont(new Font("Agency FB", 25));
 				lbNivel.setTextFill(Color.web("#000000"));
+				
 				EventHandler<MouseEvent> onClickListenerNombre = new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent event) {
@@ -93,6 +96,7 @@ public class ElegirPokemonController implements Initializable{
 						}
 					}
 		        };
+		        
 		        fpNombreNivel.setOnMouseClicked(onClickListenerNombre);
 				fpNombreNivel.getChildren().add(lbNombre);
 				fpNombreNivel.getChildren().add(lbNivel);
@@ -158,7 +162,17 @@ public class ElegirPokemonController implements Initializable{
 			FlowPane fp = (FlowPane)panel.getChildren().get(1);
 			Label lb = (Label) fp.getChildren().get(1);
 	
-			lb.setText(" Nv " +String.valueOf(panel.getPokemon().getNivel()));
+			String nivel =  String.format("%5s"," Nv "+String.valueOf(panel.getPokemon().getNivel()));
+			lb.setText(nivel);
+		}
+	}	
+	
+	public static void actualizarProgressBar() {
+		for (PokemonBorderPane panel : paneles) {
+			FlowPane fp = (FlowPane)panel.getChildren().get(2);
+			ProgressBar pb = (ProgressBar) fp.getChildren().get(1);
+			
+			pb.setProgress(panel.getPokemon().getVida()/100);
 		}
 	}	
 	
