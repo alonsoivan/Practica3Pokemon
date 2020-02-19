@@ -55,20 +55,21 @@ public class CombatePokemonController {
 	
 	@FXML 
 	public void curarse(ActionEvent event) {
-		if(((Node)event.getSource()).getId().equals("btCurarse")) {
 			
-			float ale = (new Random().nextInt(51)+25);
-			
-			float vida = (float) (ElegirPokemonController.pkm.getVida()+ale);
-			
-			if (vida>100)
-				vida = 100;
-			
-			ElegirPokemonController.pkm.setVida(vida);
-			psAliado.setProgress(vida/100f);
-			
-			enemigoAtaca();  
-		}
+		float ale = (new Random().nextInt(51)+25);
+		
+		System.out.println("Tu pokemon se ha curado "+ale+" pts de vida.");
+		
+		float vida = (float) (ElegirPokemonController.pkm.getVida()+ale);
+		
+		if (vida>100)
+			vida = 100;
+		
+		ElegirPokemonController.pkm.setVida(vida);
+		psAliado.setProgress(vida/100f);
+		
+		enemigoAtaca();  
+		
 	}
 	
 	@FXML
@@ -86,40 +87,43 @@ public class CombatePokemonController {
 			panelCursarseOAtacar.setVisible(true);
 		}
 		
+		System.out.println("Tu pokemon ataca y realiza "+ale+" pts de daño.");
+		
 		float vida = (float) (psEnemigo.getProgress()-(ale/100));
 		
 		if(vida<=0.001) {
 			psEnemigo.setProgress(0);
 			mostrarAlerta("El pokemon enemigo se debilitó","Ganaste el combate.",ivCombate);
-		}else
+		}else {
 			psEnemigo.setProgress(vida);
+			if(event.getSource() != btCancelar) 
+				enemigoAtaca();
+		}
 		
-		if(event.getSource() != btCancelar) 
-			enemigoAtaca();
 	}
 	
 	public void enemigoAtaca() {
 		ElegirPokemonController.pkm.setVida((ElegirPokemonController.pkm.getVida()-20));
 		
+		System.out.println("El pokemon enemigo ataca, pierdes 20 pts de vida.");
+		
 		psAliado.setProgress(ElegirPokemonController.pkm.getVida()/100f);
 		if (psAliado.getProgress()<=0) {
 			psAliado.setProgress(0);
 			ElegirPokemonController.pkm.setVida(0);
-			mostrarAlerta("Tu pokemon se debilitó","penita pena",ivCombate);
+			mostrarAlerta("Tu pokemon se debilitó","Perdiste el combate.",ivCombate);
 		}
+		
 	}
 	
 	@FXML  
-	public void atacar(ActionEvent event) {		
-		if(((Node) event.getSource()).getId().equals("btAtacar")) {
-			
-			btAtaqueSeguro.setText(ElegirPokemonController.pkm.getSeguro());
-			btAtaqueArriesgado.setText(ElegirPokemonController.pkm.getMedio());
-			btAtaqueMuyArriesgado.setText(ElegirPokemonController.pkm.getArriesgado());
-			
-			panelAtaques.setVisible(true);
-			panelCursarseOAtacar.setVisible(false);
-		}
+	public void atacar(ActionEvent event) {					
+		btAtaqueSeguro.setText(ElegirPokemonController.pkm.getSeguro());
+		btAtaqueArriesgado.setText(ElegirPokemonController.pkm.getMedio());
+		btAtaqueMuyArriesgado.setText(ElegirPokemonController.pkm.getArriesgado());
+		
+		panelAtaques.setVisible(true);
+		panelCursarseOAtacar.setVisible(false);
 	}
 	
 	@FXML
@@ -169,6 +173,8 @@ public class CombatePokemonController {
 		} else if (resultado.get() == salir) {
 			System.exit(0);
 		}
+		
+		System.out.println("El combate finaliza.");
 	}
 
 }

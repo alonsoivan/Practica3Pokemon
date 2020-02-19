@@ -86,11 +86,8 @@ public class ElegirPokemonController implements Initializable{
 					public void handle(MouseEvent event) {
 						
 						if(event.getClickCount() == 2) {
-							FlowPane fp = (FlowPane)event.getSource();
-						
-							Label lbNombre = (Label)fp.getChildren().get(0);
 							
-							cambiarNombrePokemons(listaPokemons,paneles);
+							cambiarNivelPokemons(listaPokemons,paneles);
 							
 							mostrarAlertaNivel();
 						}
@@ -116,7 +113,7 @@ public class ElegirPokemonController implements Initializable{
 						pkm = pokemonBorderPane.getPokemon();
 						pokemonBorderPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #b9b901, #dfdf00);");
 						
-						//System.out.println("Soy el Pokemon " + pokemonBorderPane.getPokemon().getNombre());
+						System.out.println("Elegiste a " + pokemonBorderPane.getPokemon().getNombre() + ".");
 					}
 		        };
 		        
@@ -132,7 +129,6 @@ public class ElegirPokemonController implements Initializable{
 				
 				borderPane.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #dc143c, #661a33)");
 				borderPane.setBottom(fp);
-				//borderPane.autosize();
 				borderPane.setPrefSize(215, 200);
 				pane.add(borderPane,  currentRow, currentColumn);
 				
@@ -148,9 +144,11 @@ public class ElegirPokemonController implements Initializable{
 		alert.setContentText("¡NIVELES++!");
 
 		alert.showAndWait();
+		
+		System.out.println("Todos los pokemons suben 1 nivel.");
 	}
 	
-	public void cambiarNombrePokemons(ArrayList<Pokemon> listaPokemons,ArrayList<PokemonBorderPane> paneles){
+	public void cambiarNivelPokemons(ArrayList<Pokemon> listaPokemons,ArrayList<PokemonBorderPane> paneles){
 		for (Pokemon pk : listaPokemons)
 			pk.setNivel(pk.getNivel()+1);
 		
@@ -215,6 +213,7 @@ public class ElegirPokemonController implements Initializable{
 	
 	@FXML
 	public void abrirCombate(ActionEvent event) {
+		
 		if(pkm == null)
 			mostrarAlertaSeleccionePokemon();
 		else{
@@ -222,6 +221,9 @@ public class ElegirPokemonController implements Initializable{
 				mostrarAlertaPokemonSinVida();
 			else{
 				try {
+					
+					System.out.println("Empieza el combate!");
+					
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("CombatePokemon.fxml"));
 					AnchorPane ap = (AnchorPane)loader.load();        	
 					secondStage = new Stage();
